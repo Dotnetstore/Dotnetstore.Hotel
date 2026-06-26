@@ -8,4 +8,13 @@
         <UserSecretsId>a88c28d6-7791-49d1-b36b-21d59598b781</UserSecretsId>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.4.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Dotnetstore.Hotel.Api.Hotels\Dotnetstore.Hotel.Api.Hotels.csproj" />
+        <ProjectReference Include="..\Dotnetstore.Hotel.Api.Users\Dotnetstore.Hotel.Api.Users.csproj" />
+    </ItemGroup>
+
 </Project>

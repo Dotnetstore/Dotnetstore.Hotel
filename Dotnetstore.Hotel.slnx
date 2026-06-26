@@ -1,15 +1,31 @@
 <Solution>
+  <Folder Name="/Api/" />
+  <Folder Name="/Api/Hotels/">
+    <Project Path="src/Dotnetstore.Hotel.Api.Hotels/Dotnetstore.Hotel.Api.Hotels.csproj" />
+    <Project Path="tests/Dotnetstore.Hotel.Api.Hotels.Tests/Dotnetstore.Hotel.Api.Hotels.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Api/Users/">
+    <Project Path="src/Dotnetstore.Hotel.Api.Users/Dotnetstore.Hotel.Api.Users.csproj" />
+    <Project Path="tests/Dotnetstore.Hotel.Api.Users.Tests/Dotnetstore.Hotel.Api.Users.Tests.csproj" />
+  </Folder>
   <Folder Name="/Shared/" />
   <Folder Name="/Shared/Aspire/">
     <Project Path="src/Dotnetstore.Hotel.Shared.AppHost/Dotnetstore.Hotel.Shared.AppHost.csproj" />
     <Project Path="src/Dotnetstore.Hotel.Shared.ServiceDefaults/Dotnetstore.Hotel.Shared.ServiceDefaults.csproj" />
     <Project Path="tests/Dotnetstore.Hotel.Shared.AppHost.Tests/Dotnetstore.Hotel.Shared.AppHost.Tests.csproj" />
   </Folder>
+  <Folder Name="/Shared/Cqrs/">
+    <Project Path="src/Dotnetstore.Hotel.Shared.Cqrs/Dotnetstore.Hotel.Shared.Cqrs.csproj" />
+  </Folder>
+  <Folder Name="/Shared/Sdk/">
+    <Project Path="src/Dotnetstore.Hotel.Shared.Sdk/Dotnetstore.Hotel.Shared.Sdk.csproj" />
+  </Folder>
   <Folder Name="/Shared/TestHelper/">
     <Project Path="tests/Dotnetstore.Hotel.Shared.TestHelper/Dotnetstore.Hotel.Shared.TestHelper.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
+    <File Path="CLAUDE.md" />
     <File Path="Directory.Build.props" />
     <File Path="LICENSE" />
     <File Path="README.md" />

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.4.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.9">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Dotnetstore.Hotel.Shared.ServiceDefaults\Dotnetstore.Hotel.Shared.ServiceDefaults.csproj" />
+        <ProjectReference Include="..\Dotnetstore.Hotel.Shared.Cqrs\Dotnetstore.Hotel.Shared.Cqrs.csproj" />
+        <ProjectReference Include="..\Dotnetstore.Hotel.Shared.Sdk\Dotnetstore.Hotel.Shared.Sdk.csproj" />
+    </ItemGroup>
+
+</Project>
