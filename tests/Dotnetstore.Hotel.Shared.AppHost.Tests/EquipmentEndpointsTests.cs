@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Dotnetstore.Hotel.Shared.Sdk.Dtos.Equipment;
+using Dotnetstore.Hotel.Shared.Sdk.Dtos.Room;
 using Dotnetstore.Hotel.Shared.Sdk.Dtos.Users;
 using Shouldly;
 
@@ -90,6 +91,30 @@ public class EquipmentEndpointsTests
         var updateResult = await updateResponse.Content.ReadFromJsonAsync<UpdateEquipmentResponse>(cancellationToken);
         updateResult!.Equipment.ShouldNotBeNull();
         updateResult.Equipment.Name.ShouldBe($"{name}-Renamed");
+
+        // In-use guard: a room referencing this equipment must block deletion, naming the count.
+        using var createRoomRequest = new HttpRequestMessage(HttpMethod.Post, "/api/rooms")
+        {
+            Content = JsonContent.Create(new CreateRoomRequest($"EQ-TEST-{uniqueSuffix}", 1, 2, "Double", 100.00m, "Available", [new RoomEquipmentInput(created.Id, [])])),
+        };
+        createRoomRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", login.Token);
+        using var createRoomResponse = await hotelsHttpClient.SendAsync(createRoomRequest, cancellationToken);
+        createRoomResponse.StatusCode.ShouldBe(HttpStatusCode.Created);
+        var createRoomResult = await createRoomResponse.Content.ReadFromJsonAsync<CreateRoomResponse>(cancellationToken);
+        var createdRoom = createRoomResult!.Room;
+        createdRoom.ShouldNotBeNull();
+
+        using var blockedDeleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"/api/equipment/{created.Id}");
+        blockedDeleteRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", login.Token);
+        using var blockedDeleteResponse = await hotelsHttpClient.SendAsync(blockedDeleteRequest, cancellationToken);
+        blockedDeleteResponse.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+        var blockedResult = await blockedDeleteResponse.Content.ReadFromJsonAsync<DeleteEquipmentResponse>(cancellationToken);
+        blockedResult!.Errors.ShouldContain(e => e.Contains('1'));
+
+        using var deleteRoomRequest = new HttpRequestMessage(HttpMethod.Delete, $"/api/rooms/{createdRoom.Id}");
+        deleteRoomRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", login.Token);
+        using var deleteRoomResponse = await hotelsHttpClient.SendAsync(deleteRoomRequest, cancellationToken);
+        deleteRoomResponse.StatusCode.ShouldBe(HttpStatusCode.NoContent);
 
         using var deleteRequest = new HttpRequestMessage(HttpMethod.Delete, $"/api/equipment/{created.Id}");
         deleteRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", login.Token);

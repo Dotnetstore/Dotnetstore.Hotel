@@ -40,8 +40,8 @@ public static class EquipmentEndpoints
 
         group.MapDelete("/{id:guid}", async (Guid id, IDispatcher dispatcher, CancellationToken cancellationToken) =>
         {
-            var deleted = await dispatcher.SendAsync(new DeleteEquipmentCommand(id), cancellationToken);
-            return deleted ? Results.NoContent() : Results.NotFound();
+            var result = await dispatcher.SendAsync(new DeleteEquipmentCommand(id), cancellationToken);
+            return result.Succeeded ? Results.NoContent() : Results.BadRequest(result);
         });
 
         return app;

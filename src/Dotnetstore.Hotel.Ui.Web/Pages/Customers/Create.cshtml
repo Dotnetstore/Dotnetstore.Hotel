@@ -1,0 +1,86 @@
+@page
+@model Dotnetstore.Hotel.Ui.Web.Pages.Customers.CreateModel
+@{
+    ViewData["Title"] = "Create customer";
+}
+
+<h1 class="app-page-title h2">Create customer</h1>
+<p class="app-page-subtitle">Add a new guest.</p>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="app-card">
+            @if (Model.Errors.Count > 0)
+            {
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach (var error in Model.Errors)
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <form method="post">
+                <div class="mb-4">
+                    <label asp-for="FullName" class="form-label">Full name</label>
+                    <input asp-for="FullName" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="IdentificationType" class="form-label">Identification type</label>
+                    <select asp-for="IdentificationType" class="form-select">
+                        @foreach (var type in Model.IdentificationTypes)
+                        {
+                            <option value="@type">@type</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="IdentificationNumber" class="form-label">Identification number</label>
+                    <input asp-for="IdentificationNumber" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="IdentificationNumber" class="text-danger small"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Street" class="form-label">Street</label>
+                    <input asp-for="Street" class="form-control" autocomplete="off" />
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="City" class="form-label">City</label>
+                        <input asp-for="City" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label asp-for="PostalCode" class="form-label">Postal code</label>
+                        <input asp-for="PostalCode" class="form-control" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Country" class="form-label">Country</label>
+                    <input asp-for="Country" class="form-control" autocomplete="off" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="PhoneNumber" class="form-label">Phone number</label>
+                    <input asp-for="PhoneNumber" class="form-control" autocomplete="off" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" type="email" autocomplete="off" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="DateOfBirth" class="form-label">Date of birth</label>
+                    <input asp-for="DateOfBirth" class="form-control" type="date" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Nationality" class="form-label">Nationality</label>
+                    <input asp-for="Nationality" class="form-control" autocomplete="off" />
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Notes" class="form-label">Notes</label>
+                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-brand">Create customer</button>
+            </form>
+        </div>
+    </div>
+</div>

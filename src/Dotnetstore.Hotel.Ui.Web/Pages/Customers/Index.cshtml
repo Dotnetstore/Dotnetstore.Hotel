@@ -1,0 +1,52 @@
+@page
+@model Dotnetstore.Hotel.Ui.Web.Pages.Customers.IndexModel
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+    <div>
+        <h1 class="app-page-title h2">Customers</h1>
+        <p class="app-page-subtitle mb-0">Search guests by customer number, passport/national ID, or name.</p>
+    </div>
+    <a class="btn btn-brand" asp-page="/Customers/Create">+ Create customer</a>
+</div>
+
+<form method="get" class="mb-3 d-flex gap-2">
+    <input type="text" name="Search" value="@Model.Search" class="form-control" style="max-width: 320px;" placeholder="Search customer number, ID number, or name" />
+    <button type="submit" class="btn btn-outline-secondary">Search</button>
+    <a class="btn btn-outline-secondary" asp-page="/Customers/Index">Clear</a>
+</form>
+
+<div class="app-card p-0">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th class="ps-4">#</th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th class="text-end pe-4">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model.Customers)
+            {
+                <tr>
+                    <td class="ps-4">@customer.CustomerNumber</td>
+                    <td>@customer.FullName</td>
+                    <td>@customer.IdentificationType: @customer.IdentificationNumber</td>
+                    <td>@customer.PhoneNumber</td>
+                    <td>@customer.Email</td>
+                    <td class="text-end pe-4">
+                        <a class="btn btn-sm btn-outline-secondary" asp-page="/Customers/Edit" asp-route-id="@customer.Id">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@customer.Id" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

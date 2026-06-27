@@ -33,8 +33,10 @@ public class IndexModel(IHotelClient hotelClient) : PageModel
             return Challenge();
         }
 
-        var deleted = await hotelClient.DeleteEquipmentAsync(id, accessToken, cancellationToken);
-        TempData[deleted ? "StatusMessage" : "ErrorMessage"] = deleted ? "Equipment deleted." : "Equipment not found.";
+        var result = await hotelClient.DeleteEquipmentAsync(id, accessToken, cancellationToken);
+        TempData[result.Succeeded ? "StatusMessage" : "ErrorMessage"] = result.Succeeded
+            ? "Equipment deleted."
+            : string.Join(" ", result.Errors);
 
         return RedirectToPage();
     }

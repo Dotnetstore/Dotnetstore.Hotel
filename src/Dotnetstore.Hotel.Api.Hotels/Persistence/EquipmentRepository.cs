@@ -11,6 +11,9 @@ internal sealed class EquipmentRepository(HotelDbContext dbContext) : IEquipment
     public Task<List<Equipment>> GetAllAsync(CancellationToken cancellationToken)
         => dbContext.Equipment.ToListAsync(cancellationToken);
 
+    public Task<List<Equipment>> GetByIdsAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
+        => dbContext.Equipment.Where(e => ids.Contains(e.Id)).ToListAsync(cancellationToken);
+
     public Task AddAsync(Equipment equipment, CancellationToken cancellationToken)
     {
         dbContext.Equipment.Add(equipment);

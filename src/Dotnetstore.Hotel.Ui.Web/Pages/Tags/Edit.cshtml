@@ -1,0 +1,38 @@
+@page "{id:guid}"
+@model Dotnetstore.Hotel.Ui.Web.Pages.Tags.EditModel
+@{
+    ViewData["Title"] = "Edit tag";
+}
+
+<h1 class="app-page-title h2">Edit tag</h1>
+<p class="app-page-subtitle">Rename this tag.</p>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="app-card">
+            @if (Model.Errors.Count > 0)
+            {
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach (var error in Model.Errors)
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <form method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-4">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-brand">Save changes</button>
+                    <a class="btn btn-outline-secondary" asp-page="/Tags/Index">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

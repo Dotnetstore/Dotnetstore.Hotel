@@ -10,6 +10,14 @@ public class HotelDbContext(DbContextOptions<HotelDbContext> options) : DbContex
 
     public DbSet<Equipment> Equipment => Set<Equipment>();
 
+    public DbSet<Room> Rooms => Set<Room>();
+
+    public DbSet<Tag> Tags => Set<Tag>();
+
+    public DbSet<Customer> Customers => Set<Customer>();
+
+    public DbSet<Booking> Bookings => Set<Booking>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         => modelBuilder.ApplyConfigurationsFromAssembly(typeof(HotelDbContext).Assembly);
 }

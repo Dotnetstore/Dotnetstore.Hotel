@@ -18,6 +18,10 @@ builder.AddNpgsqlDbContext<HotelDbContext>("hoteldb");
 builder.Services.AddCqrs(typeof(Program).Assembly);
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services
@@ -40,7 +44,8 @@ builder.Services
 // Role names are duplicated literals (not shared with Api.Users) - the two services are separate
 // deployables that only agree on the JWT contract, not on shared code.
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("AdminOnly", policy => policy.RequireRole("administrator", "superuser"));
+    .AddPolicy("AdminOnly", policy => policy.RequireRole("administrator", "superuser"))
+    .AddPolicy("FrontDeskOnly", policy => policy.RequireRole("administrator", "superuser", "desk"));
 
 var app = builder.Build();
 
@@ -51,6 +56,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapHotelEndpoints();
 app.MapEquipmentEndpoints();
+app.MapRoomEndpoints();
+app.MapTagEndpoints();
+app.MapCustomerEndpoints();
+app.MapBookingEndpoints();
 
 app.Run();
 

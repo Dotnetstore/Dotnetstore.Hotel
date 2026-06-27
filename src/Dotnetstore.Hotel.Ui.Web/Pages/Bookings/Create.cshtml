@@ -1,0 +1,122 @@
+@page
+@model Dotnetstore.Hotel.Ui.Web.Pages.Bookings.CreateModel
+@{
+    ViewData["Title"] = "Create booking";
+}
+
+<h1 class="app-page-title h2">Create booking</h1>
+<p class="app-page-subtitle">Search for an available room, then attach a guest.</p>
+
+@if (Model.Errors.Count > 0)
+{
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach (var error in Model.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+<form method="post">
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="app-card">
+                <h2 class="h5">1. Find a room</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="CheckInDate" class="form-label">Check-in</label>
+                        <input asp-for="CheckInDate" class="form-control" type="date" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="CheckOutDate" class="form-label">Check-out</label>
+                        <input asp-for="CheckOutDate" class="form-control" type="date" />
+                    </div>
+                </div>
+                @if (Model.AvailableEquipment.Count > 0)
+                {
+                    <div class="mb-3">
+                        <label class="form-label">Equipment</label>
+                        <div class="d-flex flex-wrap gap-3">
+                            @foreach (var equipment in Model.AvailableEquipment)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="SelectedEquipmentIds" value="@equipment.Id" id="filter-equipment-@equipment.Id" />
+                                    <label class="form-check-label" for="filter-equipment-@equipment.Id">@equipment.Name</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                @if (Model.AvailableTags.Count > 0)
+                {
+                    <div class="mb-3">
+                        <label class="form-label">Tags</label>
+                        <div class="d-flex flex-wrap gap-3">
+                            @foreach (var tag in Model.AvailableTags)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="SelectedTagIds" value="@tag.Id" id="filter-tag-@tag.Id" />
+                                    <label class="form-check-label" for="filter-tag-@tag.Id">@tag.Name</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                <button type="submit" asp-page-handler="Search" class="btn btn-outline-secondary">Search rooms</button>
+
+                <hr />
+
+                <label class="form-label">Matching rooms</label>
+                @if (Model.MatchingRooms.Count == 0)
+                {
+                    <p class="text-muted">No rooms found yet - try searching.</p>
+                }
+                else
+                {
+                    @foreach (var room in Model.MatchingRooms)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="SelectedRoomIds" value="@room.Id" id="room-@room.Id" />
+                            <label class="form-check-label" for="room-@room.Id">
+                                @room.RoomNumber - @room.BedType (@room.Capacity guests, @room.PricePerNight.ToString("0.00")/night)
+                            </label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="app-card">
+                <h2 class="h5">2. Find a guest</h2>
+                <div class="mb-3 d-flex gap-2">
+                    <input asp-for="CustomerSearch" class="form-control" placeholder="Customer number, ID number, or name" />
+                    <button type="submit" asp-page-handler="Search" class="btn btn-outline-secondary">Search customer</button>
+                </div>
+                <a asp-page="/Customers/Create" class="btn btn-sm btn-outline-secondary mb-3">+ New customer</a>
+
+                @if (Model.MatchingCustomers.Count == 0)
+                {
+                    <p class="text-muted">No customers found yet - try searching.</p>
+                }
+                else
+                {
+                    @foreach (var customer in Model.MatchingCustomers)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="SelectedCustomerId" value="@customer.Id" id="customer-@customer.Id" />
+                            <label class="form-check-label" for="customer-@customer.Id">
+                                #@customer.CustomerNumber @customer.FullName (@customer.IdentificationType: @customer.IdentificationNumber)
+                            </label>
+                        </div>
+                    }
+                }
+
+                <hr />
+                <button type="submit" asp-page-handler="Create" class="btn btn-brand">Create booking</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -8,6 +8,8 @@ public interface IEquipmentRepository
 
     Task<List<Equipment>> GetAllAsync(CancellationToken cancellationToken);
 
+    Task<List<Equipment>> GetByIdsAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken);
+
     Task AddAsync(Equipment equipment, CancellationToken cancellationToken);
 
     void Update(Equipment equipment);

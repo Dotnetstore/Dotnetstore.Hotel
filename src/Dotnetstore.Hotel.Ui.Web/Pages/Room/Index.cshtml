@@ -1,0 +1,60 @@
+@page
+@model Dotnetstore.Hotel.Ui.Web.Pages.Room.IndexModel
+@{
+    ViewData["Title"] = "Rooms";
+    var canManage = User.IsInRole("administrator") || User.IsInRole("superuser");
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+    <div>
+        <h1 class="app-page-title h2">Rooms</h1>
+        <p class="app-page-subtitle mb-0">Browse the hotel's guest rooms.</p>
+    </div>
+    @if (canManage)
+    {
+        <a class="btn btn-brand" asp-page="/Room/Create">+ Create room</a>
+    }
+</div>
+
+<div class="app-card p-0">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th class="ps-4">Room</th>
+                <th>Floor</th>
+                <th>Capacity</th>
+                <th>Bed type</th>
+                <th>Price/night</th>
+                <th>Status</th>
+                <th>Equipment</th>
+                @if (canManage)
+                {
+                    <th class="text-end pe-4">Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model.Rooms)
+            {
+                <tr>
+                    <td class="ps-4">@room.RoomNumber</td>
+                    <td>@room.Floor</td>
+                    <td>@room.Capacity</td>
+                    <td>@room.BedType</td>
+                    <td>@room.PricePerNight.ToString("0.00")</td>
+                    <td>@room.Status</td>
+                    <td>@string.Join(", ", room.Equipment.Select(re => re.Tags.Count > 0 ? $"{re.Equipment.Name} ({string.Join(", ", re.Tags.Select(t => t.Name))})" : re.Equipment.Name))</td>
+                    @if (canManage)
+                    {
+                        <td class="text-end pe-4">
+                            <a class="btn btn-sm btn-outline-secondary" asp-page="/Room/Edit" asp-route-id="@room.Id">Edit</a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@room.Id" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
