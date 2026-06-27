@@ -1,0 +1,93 @@
+@page
+@model HotelModel
+@{
+    ViewData["Title"] = "Hotel";
+}
+
+@if (Model.Hotel is null)
+{
+    <div class="app-card">Hotel not found.</div>
+}
+else
+{
+    <h1 class="app-page-title h2">@Model.Hotel.Name</h1>
+    <p class="app-page-subtitle">Manage the hotel's profile, address, contact details and amenities.</p>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="app-card">
+                <div class="app-section-title">Current profile</div>
+                <dl class="mb-0">
+                    <dt class="text-muted-sm">Address</dt>
+                    <dd>@Model.Hotel.Address.Street, @Model.Hotel.Address.City @Model.Hotel.Address.PostalCode, @Model.Hotel.Address.Country</dd>
+                    <dt class="text-muted-sm">Phone</dt>
+                    <dd>@Model.Hotel.ContactInfo.PhoneNumber</dd>
+                    <dt class="text-muted-sm">Email</dt>
+                    <dd>@Model.Hotel.ContactInfo.Email</dd>
+                    @if (!string.IsNullOrWhiteSpace(Model.Hotel.ContactInfo.Website))
+                    {
+                        <dt class="text-muted-sm">Website</dt>
+                        <dd><a href="@Model.Hotel.ContactInfo.Website" target="_blank" rel="noopener">@Model.Hotel.ContactInfo.Website</a></dd>
+                    }
+                </dl>
+                @if (Model.Hotel.Amenities.Count > 0)
+                {
+                    <div class="text-muted-sm mb-2">Amenities</div>
+                    <div>
+                        @foreach (var amenity in Model.Hotel.Amenities)
+                        {
+                            <span class="app-amenity-pill">@amenity</span>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="app-card">
+                <div class="app-section-title">Edit details</div>
+                <form method="post">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label asp-for="Name" class="form-label">Hotel name</label>
+                            <input asp-for="Name" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Street" class="form-label">Street</label>
+                            <input asp-for="Street" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="City" class="form-label">City</label>
+                            <input asp-for="City" class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="PostalCode" class="form-label">Postal code</label>
+                            <input asp-for="PostalCode" class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <label asp-for="Country" class="form-label">Country</label>
+                            <input asp-for="Country" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="PhoneNumber" class="form-label">Phone number</label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="ContactEmail" class="form-label">Contact email</label>
+                            <input asp-for="ContactEmail" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Website" class="form-label">Website (optional)</label>
+                            <input asp-for="Website" class="form-control" />
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="AmenitiesCsv" class="form-label">Amenities (comma-separated)</label>
+                            <input asp-for="AmenitiesCsv" class="form-control" placeholder="Wifi, Pool, Spa" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-brand mt-4">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+}

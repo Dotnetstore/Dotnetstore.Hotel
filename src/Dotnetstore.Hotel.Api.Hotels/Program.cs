@@ -46,6 +46,6 @@ internal static class SeedHotel
     public static HotelEntity Default => HotelEntity.Create(
         Id,
         "Dotnetstore Grand Hotel",
-        new Address("123 Main Street", "Stockholm", "11122", "Sweden"),
+        new Address("Glädjebacksgatan 4B", "Trelleborg", "23145", "Sweden"),
         new ContactInfo("+46 8 123 456", "info@dotnetstore.hotel", "https://dotnetstore.hotel"));
 }

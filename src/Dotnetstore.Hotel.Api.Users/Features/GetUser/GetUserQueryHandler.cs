@@ -16,6 +16,6 @@ public class GetUserQueryHandler(UserManager<ApplicationUser> userManager) : IQu
         }
 
         var roles = await userManager.GetRolesAsync(user);
-        return new UserDto(user.Id, user.Email ?? string.Empty, user.UserName ?? string.Empty, roles.ToList());
+        return await UserDtoMapper.ToDtoAsync(userManager, user, roles.ToList());
     }
 }

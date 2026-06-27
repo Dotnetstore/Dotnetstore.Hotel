@@ -101,4 +101,29 @@ public class RefreshTokenCommandHandlerTests
 
         result.ShouldBeNull();
     }
+
+    [Fact]
+    public async Task HandleAsync_LockedOutUser_ReturnsNull()
+    {
+        var user = new ApplicationUser { Id = Guid.NewGuid(), Email = "user@hotel.com", UserName = "user@hotel.com" };
+        var existingToken = RefreshToken.Create(user.Id, "existing-hash", DateTimeOffset.UtcNow.AddDays(1));
+
+        var refreshTokenRepository = new Mock<IRefreshTokenRepository>();
+        refreshTokenRepository.Setup(r => r.GetByHashAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(existingToken);
+
+        var userManager = IdentityMocks.CreateUserManagerMock();
+        userManager.Setup(m => m.FindByIdAsync(user.Id.ToString())).ReturnsAsync(user);
+        userManager.Setup(m => m.IsLockedOutAsync(user)).ReturnsAsync(true);
+
+        var handler = new RefreshTokenCommandHandler(
+            userManager.Object,
+            Mock.Of<IJwtTokenService>(),
+            refreshTokenRepository.Object,
+            Mock.Of<IUnitOfWork>(),
+            DefaultJwtSettings);
+
+        var result = await handler.HandleAsync(new RefreshTokenCommand("raw-token"), CancellationToken.None);
+
+        result.ShouldBeNull();
+    }
 }

@@ -15,6 +15,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Dotnetstore.Hotel.Api.Hotels\Dotnetstore.Hotel.Api.Hotels.csproj" />
         <ProjectReference Include="..\Dotnetstore.Hotel.Api.Users\Dotnetstore.Hotel.Api.Users.csproj" />
+        <ProjectReference Include="..\Dotnetstore.Hotel.Ui.Web\Dotnetstore.Hotel.Ui.Web.csproj" />
     </ItemGroup>
 
 </Project>

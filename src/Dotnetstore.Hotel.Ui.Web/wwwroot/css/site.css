@@ -1,0 +1,187 @@
+:root {
+  --brand-50: #eef2ff;
+  --brand-100: #e0e7ff;
+  --brand-500: #6366f1;
+  --brand-600: #4f46e5;
+  --brand-700: #4338ca;
+  --ink-900: #0f172a;
+  --ink-700: #334155;
+  --ink-500: #64748b;
+  --surface: #f8fafc;
+  --card-radius: 1rem;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink-900);
+  min-height: 100vh;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.app-navbar {
+  background: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+  padding: 0.85rem 0;
+  box-shadow: 0 4px 20px rgba(67, 56, 202, 0.25);
+}
+
+.app-brand {
+  color: #fff !important;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.app-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.app-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-weight: 500;
+}
+
+.app-navbar .nav-link:hover {
+  color: #fff !important;
+}
+
+.nav-user-pill {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+}
+
+.app-main {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+.app-alert {
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+}
+
+.app-alert.alert-success {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.app-alert.alert-danger {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.app-card {
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: var(--card-radius);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 28px -12px rgba(15, 23, 42, 0.12);
+  padding: 2rem;
+}
+
+.app-card + .app-card {
+  margin-top: 1.5rem;
+}
+
+.app-page-title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink-900);
+  margin-bottom: 0.25rem;
+}
+
+.app-page-subtitle {
+  color: var(--ink-500);
+  margin-bottom: 2rem;
+}
+
+.app-section-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--brand-600);
+  margin-bottom: 0.75rem;
+}
+
+.app-amenity-pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--brand-50);
+  color: var(--brand-700);
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  margin: 0.2rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--ink-700);
+  font-size: 0.9rem;
+}
+
+.form-control,
+.form-select {
+  border-radius: 0.6rem;
+  border-color: rgba(15, 23, 42, 0.12);
+  padding: 0.6rem 0.9rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.18);
+}
+
+.btn-brand {
+  background: linear-gradient(135deg, var(--brand-600), var(--brand-500));
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0.6rem;
+  padding: 0.6rem 1.4rem;
+  box-shadow: 0 8px 18px -6px rgba(79, 70, 229, 0.45);
+}
+
+.btn-brand:hover {
+  background: linear-gradient(135deg, var(--brand-700), var(--brand-600));
+  color: #fff;
+}
+
+.auth-shell {
+  min-height: calc(100vh - 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 26rem;
+}
+
+.auth-card .app-brand-mark {
+  background: var(--brand-50);
+  color: var(--brand-600);
+}
+
+.text-muted-sm {
+  color: var(--ink-500);
+  font-size: 0.85rem;
+}

@@ -57,6 +57,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapAuthEndpoints();
 app.MapUserEndpoints();
+app.MapRoleEndpoints();
 
 app.Run();
 
@@ -76,7 +77,7 @@ static async Task MigrateAndSeedAsync(IServiceProvider services)
     }
 
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    if (await userManager.FindByEmailAsync(SeedAdmin.Email) is null)
+    if (await userManager.FindByIdAsync(SeedAdmin.Id.ToString()) is null)
     {
         var admin = new ApplicationUser
         {
@@ -93,7 +94,7 @@ static async Task MigrateAndSeedAsync(IServiceProvider services)
 internal static class SeedAdmin
 {
     public static readonly Guid Id = Guid.Parse("99999999-9999-9999-9999-999999999999");
-    public const string Email = "admin@dotnetstore.hotel";
+    public const string Email = "hasse29@hotmail.com";
 
     // Dev-only seed password, meets default ASP.NET Core Identity complexity rules.
     public const string Password = "Adm1n!2024";

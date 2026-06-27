@@ -23,6 +23,10 @@
   <Folder Name="/Shared/TestHelper/">
     <Project Path="tests/Dotnetstore.Hotel.Shared.TestHelper/Dotnetstore.Hotel.Shared.TestHelper.csproj" />
   </Folder>
+  <Folder Name="/Ui/" />
+  <Folder Name="/Ui/Web/">
+    <Project Path="src/Dotnetstore.Hotel.Ui.Web/Dotnetstore.Hotel.Ui.Web.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
     <File Path="CLAUDE.md" />

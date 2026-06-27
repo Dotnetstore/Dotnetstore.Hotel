@@ -30,6 +30,11 @@ public class LoginCommandHandler(
             return null;
         }
 
+        if (await userManager.IsLockedOutAsync(user))
+        {
+            return null;
+        }
+
         var roles = await userManager.GetRolesAsync(user);
         var (token, expiresAtUtc) = jwtTokenService.GenerateToken(user, roles.ToList());
 

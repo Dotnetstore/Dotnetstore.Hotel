@@ -13,4 +13,12 @@ public static class Roles
     [
         Administrator, Superuser, Desk, Restaurant, Cleaning, Maintenance,
     ];
+
+    /// <summary>
+    /// Administrator/superuser are hardcoded in the "AdminOnly" authorization policy (Program.cs) by name,
+    /// so renaming or deleting either would lock everyone out of every admin feature with no recovery path.
+    /// </summary>
+    public static bool IsProtected(string roleName)
+        => string.Equals(roleName, Administrator, StringComparison.OrdinalIgnoreCase)
+           || string.Equals(roleName, Superuser, StringComparison.OrdinalIgnoreCase);
 }

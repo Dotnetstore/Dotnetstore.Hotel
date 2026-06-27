@@ -67,4 +67,20 @@ public class LoginCommandHandlerTests
 
         result.ShouldBeNull();
     }
+
+    [Fact]
+    public async Task HandleAsync_LockedOutUser_ReturnsNull()
+    {
+        var user = new ApplicationUser { Id = Guid.NewGuid(), Email = "user@hotel.com", UserName = "user@hotel.com" };
+
+        var userManager = IdentityMocks.CreateUserManagerMock();
+        userManager.Setup(m => m.FindByEmailAsync(user.Email)).ReturnsAsync(user);
+        userManager.Setup(m => m.CheckPasswordAsync(user, "correct-password")).ReturnsAsync(true);
+        userManager.Setup(m => m.IsLockedOutAsync(user)).ReturnsAsync(true);
+
+        var handler = new LoginCommandHandler(userManager.Object, Mock.Of<IJwtTokenService>(), Mock.Of<IRefreshTokenRepository>(), Mock.Of<IUnitOfWork>(), DefaultJwtSettings);
+        var result = await handler.HandleAsync(new LoginCommand(user.Email, "correct-password"), CancellationToken.None);
+
+        result.ShouldBeNull();
+    }
 }

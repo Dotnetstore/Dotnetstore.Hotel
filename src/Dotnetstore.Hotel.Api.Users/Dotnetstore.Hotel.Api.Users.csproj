@@ -22,4 +22,12 @@
         <ProjectReference Include="..\Dotnetstore.Hotel.Shared.Sdk\Dotnetstore.Hotel.Shared.Sdk.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <!-- Lets Shared.AppHost.Tests reference SeedAdmin directly instead of duplicating its email/password
+             as a separate literal that silently drifts out of sync (as happened: source changed, test didn't). -->
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>Dotnetstore.Hotel.Shared.AppHost.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
 </Project>

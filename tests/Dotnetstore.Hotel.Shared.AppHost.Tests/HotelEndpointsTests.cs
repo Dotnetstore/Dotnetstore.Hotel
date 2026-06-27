@@ -13,7 +13,8 @@ public class HotelEndpointsTests
     public async Task GetThenUpdateHotel_RoundTrips()
     {
         var cancellationToken = CancellationToken.None;
-        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.Dotnetstore_Hotel_Shared_AppHost>(cancellationToken);
+        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.Dotnetstore_Hotel_Shared_AppHost>(
+            ["--IsIntegrationTest=true"], cancellationToken);
         appHost.Services.ConfigureHttpClientDefaults(clientBuilder =>
         {
             clientBuilder.AddStandardResilienceHandler();

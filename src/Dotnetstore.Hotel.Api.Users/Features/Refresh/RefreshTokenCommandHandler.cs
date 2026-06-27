@@ -31,6 +31,11 @@ public class RefreshTokenCommandHandler(
             return null;
         }
 
+        if (await userManager.IsLockedOutAsync(user))
+        {
+            return null;
+        }
+
         var roles = await userManager.GetRolesAsync(user);
         var (accessToken, accessTokenExpiresAtUtc) = jwtTokenService.GenerateToken(user, roles.ToList());
 

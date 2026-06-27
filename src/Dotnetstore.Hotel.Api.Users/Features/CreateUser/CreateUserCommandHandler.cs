@@ -35,6 +35,7 @@ public class CreateUserCommandHandler(UserManager<ApplicationUser> userManager, 
             return new CreateUserResponse(null, roleResult.Errors.Select(e => e.Description).ToList());
         }
 
-        return new CreateUserResponse(new UserDto(user.Id, command.Email, command.UserName, [command.Role]), []);
+        var dto = await UserDtoMapper.ToDtoAsync(userManager, user, [command.Role]);
+        return new CreateUserResponse(dto, []);
     }
 }

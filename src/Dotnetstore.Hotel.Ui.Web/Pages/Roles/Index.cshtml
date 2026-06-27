@@ -1,0 +1,50 @@
+@page
+@model Dotnetstore.Hotel.Ui.Web.Pages.Roles.IndexModel
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+    <div>
+        <h1 class="app-page-title h2">Roles</h1>
+        <p class="app-page-subtitle mb-0">Manage the roles staff accounts can be assigned.</p>
+    </div>
+    <a class="btn btn-brand" asp-page="/Roles/Create">+ Create role</a>
+</div>
+
+<div class="app-card p-0">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th class="ps-4">Name</th>
+                <th>Users</th>
+                <th></th>
+                <th class="text-end pe-4">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td class="ps-4">@role.Name</td>
+                    <td>@role.UserCount</td>
+                    <td>
+                        @if (role.IsProtected)
+                        {
+                            <span class="badge text-bg-secondary">Protected</span>
+                        }
+                    </td>
+                    <td class="text-end pe-4">
+                        <a class="btn btn-sm btn-outline-secondary" asp-page="/Roles/Edit" asp-route-id="@role.Id">Edit</a>
+                        @if (!role.IsProtected)
+                        {
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@role.Id" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
