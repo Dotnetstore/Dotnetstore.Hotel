@@ -20,7 +20,8 @@ var jwtSigningKey = builder.AddParameter("jwt-signing-key", secret: true);
 
 var apiHotels = builder.AddProject<Projects.Dotnetstore_Hotel_Api_Hotels>("apihotels")
     .WithReference(hotelDb)
-    .WaitFor(hotelDb);
+    .WaitFor(hotelDb)
+    .WithEnvironment("Jwt__SigningKey", jwtSigningKey);
 
 var apiUsers = builder.AddProject<Projects.Dotnetstore_Hotel_Api_Users>("apiusers")
     .WithReference(identityDb)

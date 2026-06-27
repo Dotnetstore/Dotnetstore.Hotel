@@ -1,8 +1,12 @@
+using Dotnetstore.Hotel.Api.Hotels.Authentication;
 using Dotnetstore.Hotel.Api.Hotels.Domain;
 using Dotnetstore.Hotel.Api.Hotels.Endpoints;
 using Dotnetstore.Hotel.Api.Hotels.Persistence;
 using Dotnetstore.Hotel.Shared.Cqrs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using HotelEntity = Dotnetstore.Hotel.Api.Hotels.Domain.Hotel;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,14 +17,40 @@ builder.AddNpgsqlDbContext<HotelDbContext>("hoteldb");
 
 builder.Services.AddCqrs(typeof(Program).Assembly);
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtSettings = builder.Configuration.GetSection(JwtSettings.SectionName).Get<JwtSettings>() ?? new JwtSettings();
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidateAudience = true,
+            ValidAudience = jwtSettings.Audience,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SigningKey)),
+        };
+    });
+
+// Role names are duplicated literals (not shared with Api.Users) - the two services are separate
+// deployables that only agree on the JWT contract, not on shared code.
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AdminOnly", policy => policy.RequireRole("administrator", "superuser"));
 
 var app = builder.Build();
 
 await MigrateAndSeedAsync(app.Services);
 
 app.MapDefaultEndpoints();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapHotelEndpoints();
+app.MapEquipmentEndpoints();
 
 app.Run();
 

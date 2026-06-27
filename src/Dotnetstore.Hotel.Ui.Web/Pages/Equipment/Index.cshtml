@@ -1,0 +1,40 @@
+@page
+@model Dotnetstore.Hotel.Ui.Web.Pages.Equipment.IndexModel
+@{
+    ViewData["Title"] = "Equipment";
+}
+
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+    <div>
+        <h1 class="app-page-title h2">Equipment</h1>
+        <p class="app-page-subtitle mb-0">Manage the catalog of equipment types rooms can be fitted with.</p>
+    </div>
+    <a class="btn btn-brand" asp-page="/Equipment/Create">+ Create equipment</a>
+</div>
+
+<div class="app-card p-0">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr>
+                <th class="ps-4">Name</th>
+                <th>Description</th>
+                <th class="text-end pe-4">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Equipment)
+            {
+                <tr>
+                    <td class="ps-4">@item.Name</td>
+                    <td>@item.Description</td>
+                    <td class="text-end pe-4">
+                        <a class="btn btn-sm btn-outline-secondary" asp-page="/Equipment/Edit" asp-route-id="@item.Id">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

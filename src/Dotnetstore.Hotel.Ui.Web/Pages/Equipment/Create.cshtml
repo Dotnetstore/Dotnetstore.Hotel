@@ -1,0 +1,38 @@
+@page
+@model Dotnetstore.Hotel.Ui.Web.Pages.Equipment.CreateModel
+@{
+    ViewData["Title"] = "Create equipment";
+}
+
+<h1 class="app-page-title h2">Create equipment</h1>
+<p class="app-page-subtitle">Add a new equipment type that rooms can be fitted with.</p>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="app-card">
+            @if (Model.Errors.Count > 0)
+            {
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach (var error in Model.Errors)
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <form method="post">
+                <div class="mb-4">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <input asp-for="Description" class="form-control" autocomplete="off" />
+                </div>
+                <button type="submit" class="btn btn-brand">Create equipment</button>
+            </form>
+        </div>
+    </div>
+</div>
